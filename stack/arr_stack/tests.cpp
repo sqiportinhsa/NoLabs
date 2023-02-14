@@ -63,8 +63,6 @@ static void run_test_2() {
         pop__many_times(stk, Magic_const_lower);
     }
 
-    printf("%d %d\n", range);
-
     while (stk->size > Magic_const) {
         range = stk->size / 2;
         pop__many_times(stk, range);
@@ -111,11 +109,6 @@ static void push_many_times(Stack *stk, int times) {
     int num = 0;
 
     for (int i = 0; i < times; i++) {
-        if (i % 100000 == 0) {
-            //printf("in push many times i = %d\n", i);
-            //printf("stk size     %d\n", stk->size);
-            //printf("stk capacity %d\n", stk->capacity);
-        }
         num = i;
         push(stk, &num);
     }

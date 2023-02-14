@@ -57,7 +57,7 @@ int top(Stack *stk, void* buffer) {
 int pop(Stack *stk) {
     assert(stk != nullptr);
     if (stk->size == 0) {
-        //printf("error in pop\n");
+        printf("error in pop\n");
         return 0;
     }
 

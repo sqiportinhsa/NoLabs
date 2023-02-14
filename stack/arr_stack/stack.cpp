@@ -66,9 +66,6 @@ int pop(Stack *stk) {
 }
 
 static void arr_realloc(Stack *stk) {
-    //printf("old capacity %d\n", stk->capacity);
-    //printf("ptr before realloc: %p\n", stk->arr);
     stk->arr = realloc(stk->arr, stk->capacity * 2 * stk->el_size);
-    //printf("realloc returns     %p\n", stk->arr);
     stk->capacity *= 2;
 }
