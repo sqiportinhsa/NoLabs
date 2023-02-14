@@ -37,16 +37,14 @@ static void run_test_1() {
     push_many_times(stk, Magic_const_big);
 
     while (stk->size > Magic_const) {
-        push_many_times(stk, range);
-        range /= 2;
-        printf("%d %d\n", stk->size, range);
-        sleep(1);
+        range = stk->size / 2;
         pop__many_times(stk, range);
         range /= 2;
+        push_many_times(stk, range);
     }
 
     clock_t end = clock();
-    printf("Test 1 finished. time: %lf\n", (double) ((end - begin) / CLOCKS_PER_SEC));
+    printf("Test 1 finished. time: %lf\n", (double) (end - begin));
 
     stack_dtr(stk);
 }
@@ -68,12 +66,10 @@ static void run_test_2() {
     printf("%d %d\n", range);
 
     while (stk->size > Magic_const) {
+        range = stk->size / 2;
         pop__many_times(stk, range);
         range /= 2;
-        printf("%d %d\n", stk->size, range);
-        sleep(1);
         push_many_times(stk, range);
-        range /= 2;
     }
 
     for (int i = 0; i < Magic_const_rly_low; i++) {
@@ -82,7 +78,7 @@ static void run_test_2() {
     }
 
     clock_t end = clock();
-    printf("Test 2 finished. time: %lf\n", (double) ((end - begin) / CLOCKS_PER_SEC));
+    printf("Test 2 finished. time: %lf\n", (double) (end - begin));
 
     stack_dtr(stk);
 }
@@ -106,7 +102,7 @@ static void run_test_3() {
     }
 
     clock_t end = clock();
-    printf("Test 3 finished. time: %lf\n", (double) ((end - begin) / CLOCKS_PER_SEC));
+    printf("Test 3 finished. time: %lf\n", (double) (end - begin));
 
     stack_dtr(stk);
 }
@@ -116,9 +112,9 @@ static void push_many_times(Stack *stk, int times) {
 
     for (int i = 0; i < times; i++) {
         if (i % 100000 == 0) {
-            printf("in push many times i = %d\n", i);
-            printf("stk size     %d\n", stk->size);
-            printf("stk capacity %d\n", stk->capacity);
+            //printf("in push many times i = %d\n", i);
+            //printf("stk size     %d\n", stk->size);
+            //printf("stk capacity %d\n", stk->capacity);
         }
         num = i;
         push(stk, &num);

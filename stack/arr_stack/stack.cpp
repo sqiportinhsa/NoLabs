@@ -34,9 +34,7 @@ int push(Stack* stk, void* buffer) {
     assert(buffer != nullptr);
 
     if (stk->size == stk->capacity) {
-        printf("start realloc\n");
         arr_realloc(stk);
-        printf("new capacity %zd\n", stk->capacity);
     }
 
     memcpy(stk->arr + (stk->el_size)*(stk->size), buffer, stk->el_size);
@@ -68,9 +66,9 @@ int pop(Stack *stk) {
 }
 
 static void arr_realloc(Stack *stk) {
-    printf("old capacity %d\n", stk->capacity);
-    printf("ptr before realloc: %p\n", stk->arr);
-    stk->arr = realloc(stk->arr, stk->capacity * 2);
-    printf("realloc returns     %p\n", stk->arr);
+    //printf("old capacity %d\n", stk->capacity);
+    //printf("ptr before realloc: %p\n", stk->arr);
+    stk->arr = realloc(stk->arr, stk->capacity * 2 * stk->el_size);
+    //printf("realloc returns     %p\n", stk->arr);
     stk->capacity *= 2;
 }
