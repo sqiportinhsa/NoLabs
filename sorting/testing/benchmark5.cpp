@@ -3,26 +3,24 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "../bubble/bubble.h"
 #include "../insertion/insertion.h"
-#include "../selection/selection.h"
 
-const size_t min_size = 1000;
+const size_t min_size = 10000;
 const size_t max_size = 100000;
-const size_t step     = 10000;
+const size_t step     = 1000;
 
 int measures_num = 5;
 
 struct Arrs {
-    int *bubble    = nullptr;
-    int *insertion = nullptr;
-    int *selection = nullptr;     
+    int *no_opt    = nullptr;
+    int *move      = nullptr;
+    int *binsearch = nullptr;     
 };
 
 struct Times {
-    long bubble    = 0;
-    long insertion = 0;
-    long selection = 0;    
+    long no_opt    = 0;
+    long move      = 0;
+    long binsearch = 0;    
 };
 
 
@@ -41,20 +39,24 @@ int main() {
             measures[i] = test(size);
         }
         print_results(measures, size);
+        for (int i = 0; i < measures_num; i++) {
+            free(measures[i]);
+        }
     }
+    return 0;
 }
 
 Times *test(size_t arr_size) {
     Times *times = (Times*) calloc(1, sizeof(Times));
     Arrs  *arrs  = create_arr(arr_size);
 
-    times->bubble    = get_sort_time(arrs->bubble,    arr_size, bubble_sort);
-    times->insertion = get_sort_time(arrs->insertion, arr_size, insertion_sort_move);
-    times->selection = get_sort_time(arrs->selection, arr_size, selection_sort);
+    times->no_opt    = get_sort_time(arrs->no_opt,    arr_size, insertion_sort);
+    times->move      = get_sort_time(arrs->move, arr_size, insertion_sort_move);
+    times->binsearch = get_sort_time(arrs->binsearch, arr_size, insertion_sort_binsearch);
 
-    free(arrs->bubble);
-    free(arrs->insertion);
-    free(arrs->selection);
+    free(arrs->no_opt);
+    free(arrs->move);
+    free(arrs->binsearch);
     free(arrs);
 
     return times;
@@ -72,38 +74,38 @@ long get_sort_time(int *arr, size_t arr_size, void (*sorting)(int *array, size_t
 Arrs *create_arr(size_t size) {
     Arrs *arrs = (Arrs*) calloc(1, sizeof(Arrs));
 
-    arrs->bubble    = (int*) calloc(size, sizeof(int));
-    arrs->insertion = (int*) calloc(size, sizeof(int));
-    arrs->selection = (int*) calloc(size, sizeof(int));
+    arrs->no_opt    = (int*) calloc(size, sizeof(int));
+    arrs->move = (int*) calloc(size, sizeof(int));
+    arrs->binsearch = (int*) calloc(size, sizeof(int));
 
     for (size_t i = 0; i < size; i++) {
         int num = rand();
 
-        arrs->bubble[i]    = num;
-        arrs->insertion[i] = num;
-        arrs->selection[i] = num;
+        arrs->no_opt[i]    = num;
+        arrs->move[i] = num;
+        arrs->binsearch[i] = num;
     }
 
     return arrs;
 }
 
 void print_results(Times **times, size_t arr_size) {
-    printf("Bubble sort,%zu,", arr_size);
+    printf("No optimization insertion sort,%zu,", arr_size);
     for (int i = 0; i < measures_num; i++) {
-        printf("%ld,", times[i]->bubble);
+        printf("%ld,", times[i]->no_opt);
     }
-    printf("%ld\n", times[measures_num-1]->bubble);
+    printf("%ld\n", times[measures_num-1]->no_opt);
 
-    printf("Insertion sort,%zu,", arr_size);
+    printf("Move optimization insertion sort,%zu,", arr_size);
     for (int i = 0; i < measures_num - 1; i++) {
-        printf("%ld,", times[i]->insertion);
+        printf("%ld,", times[i]->move);
     }
-    printf("%ld\n", times[measures_num-1]->insertion);
+    printf("%ld\n", times[measures_num-1]->move);
 
-    printf("Selection sort,%zu,", arr_size);
+    printf("Binsearch optimization insertion sort,%zu,", arr_size);
     for (int i = 0; i < measures_num; i++) {
-        printf("%ld,", times[i]->selection);
+        printf("%ld,", times[i]->binsearch);
     }
-    printf("%ld\n", times[measures_num-1]->selection);
+    printf("%ld\n", times[measures_num-1]->binsearch);
     fflush(stdout);
 }
