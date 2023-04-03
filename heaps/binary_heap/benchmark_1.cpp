@@ -10,7 +10,7 @@ const size_t min_size = 1000000;
 const size_t max_size = 100000000;
 const size_t step     = 1000000;
 
-size_t measures_num = 5;
+const size_t measures_num = 5;
 
 long test(int *arr, size_t arr_size);
 long get_sort_time(int *arr, size_t arr_size); 
