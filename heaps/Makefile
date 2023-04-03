@@ -1,6 +1,6 @@
 .PHONY: all
 
-Folders = binary_heap/obj/ benchmarks/build benchmarks/data
+Folders = binary_heap/obj/ benchmarks/build benchmarks/data k_heap/obj
 
 OPT_FLAGS = -O3 -march=native -mtune=native -flto
 
@@ -21,6 +21,15 @@ bench1: binary_heap/obj/benchmark_1.o binary_heap/obj/binary_heap.o
 binary_heap/obj/benchmark_1.o: binary_heap/benchmark_1.cpp binary_heap/binary_heap.h
 	gcc $(OPT_FLAGS) -c binary_heap/benchmark_1.cpp -o binary_heap/obj/benchmark_1.o
 
-
 binary_heap/obj/binary_heap.o: binary_heap/binary_heap.cpp binary_heap/binary_heap.h
 	gcc $(OPT_FLAGS) -c binary_heap/binary_heap.cpp -o binary_heap/obj/binary_heap.o
+
+
+bench2: k_heap/obj/benchmark_2.o k_heap/obj/kheap.o
+	gcc $(OPT_FLAGS) k_heap/obj/benchmark_2.o k_heap/obj/kheap.o -o benchmarks/build/benchmark_2
+
+k_heap/obj/benchmark_2.o: k_heap/benchmark_2.cpp k_heap/kheap.h
+	gcc $(OPT_FLAGS) -c k_heap/benchmark_2.cpp -o k_heap/obj/benchmark_2.o
+
+k_heap/obj/kheap.o: k_heap/kheap.cpp k_heap/kheap.h
+	gcc $(OPT_FLAGS) -c k_heap/kheap.cpp -o k_heap/obj/kheap.o
