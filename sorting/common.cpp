@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include "common.h"
 
 void swap(int *first, int *second) {

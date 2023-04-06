@@ -4,6 +4,7 @@
 #include <unistd.h>
 
 #include "../qsort/qsort.h"
+#include "../common.h"
 
 const size_t min_size = 250000;
 const size_t max_size = 10000000;
@@ -13,6 +14,7 @@ const char *identical = "identical";
 const char *sorted = "sorted";
 const char *reversed = "reversed";
 const char *random_arr = "random";
+const char *antimid = "anti-mid";
 
 int measures_num = 5;
 
@@ -38,6 +40,7 @@ Arrs *create_arr(size_t size);
 Arrs *create_indentical(size_t size);
 Arrs *create_sorted(size_t size);
 Arrs *create_reversed(size_t size);
+Arrs *create_anti_mid(size_t size);
 
 
 int main() {
@@ -48,6 +51,7 @@ int main() {
         test(size, create_indentical, identical);
         test(size, create_sorted, sorted);
         test(size, create_reversed, reversed);
+        test(size, create_anti_mid, antimid);
     }
 }
 
@@ -150,6 +154,29 @@ Arrs *create_arr(size_t size) {
         arrs->median[i]  = num;
         arrs->central[i] = num;
         arrs->random[i]  = num;
+    }
+
+    return arrs;
+}
+
+Arrs *create_anti_mid(size_t size) {
+    Arrs *arrs = (Arrs*) calloc(1, sizeof(Arrs));
+
+    arrs->median  = (int*) calloc(size, sizeof(int));
+    arrs->central = (int*) calloc(size, sizeof(int));
+    arrs->random  = (int*) calloc(size, sizeof(int));
+
+    for (size_t i = 0; i < size; ++i) {
+        arrs->median[i] = (int) i;
+    }
+
+    for (size_t i = 0; i < size; ++i) {
+        swap(arrs->median + i, arrs->median + i / 2);
+    }
+
+    for (size_t i = 0; i < size; ++i) {
+        arrs->central[i] = arrs->median[i];
+        arrs->random[i]  = arrs->median[i];
     }
 
     return arrs;
