@@ -6,13 +6,13 @@
 
 #include "kheap.h"
 
-const size_t min_size = 1000000;
-const size_t max_size = 100000000;
-const size_t step     = 1000000;
+const size_t min_size = 10;
+const size_t max_size = 11;
+const size_t step     = 10;
 
-const size_t measures_num = 5;
+const size_t measures_num = 1;
 
-const size_t k_values[] = {5,10,25, 50, 100, 200, 300, 400, 500, 1000};
+const size_t k_values[] = {5,2,3, 50, 100, 200, 300, 400, 500, 1000};
 
 long test(int *arr, size_t arr_size, size_t k_value);
 long get_sort_time(void (*sorting)(int *arr, size_t arr_size, size_t k_value), 
@@ -63,7 +63,7 @@ long get_sort_time(void (*sorting)(int *arr, size_t arr_size, size_t k_value),
 int *create_arr(size_t size) {
     int *arr = (int*) calloc(size, sizeof(int));
     for (size_t i = 0; i < size; i++) {
-        arr[i] = rand();
+        arr[i] = rand() %50;
     }
 
     return arr;

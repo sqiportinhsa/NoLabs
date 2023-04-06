@@ -10,12 +10,31 @@ static size_t get_max(int *arr, size_t k);
 
 void heap_sort(int *arr, size_t size, size_t k) {
     KHeap *heap = init_heap(arr, size, k);
-
+    for (size_t i = 0; i < size; ++i) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+    
     for (size_t i = size - 1; i > 0; --i) {
+        printf("before ");
+        for (size_t i = 0; i < size; ++i) {
+            printf("%d ", arr[i]);
+        }
+        printf("\n");
         swap(heap->data, heap->data + i);
         --heap->size;
         shift_down(heap, 0);
+        printf("after ");
+        for (size_t i = 0; i < size; ++i) {
+            printf("%d ", arr[i]);
+        }
+        printf("\n");
     }
+
+    for (size_t i = 0; i < size; ++i) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n\n");
     free(heap);
 }
 
@@ -38,7 +57,7 @@ static void build_heap(KHeap *heap) {
 }
 
 static void shift_down(KHeap *heap, size_t shift_index) {
-    if (heap->size * heap->k > heap->size)
+    if (shift_index * heap->k >= heap->size)
         return;
 
     size_t last = (shift_index + 1) * heap->k;
@@ -46,8 +65,10 @@ static void shift_down(KHeap *heap, size_t shift_index) {
         last  = heap->size - 1;
     }
 
+    size_t first = shift_index * heap->k + 1;
     size_t child_amount = last - shift_index * heap->k;
-    size_t max = shift_index * heap->k + get_max(heap->data, child_amount) + 1;
+    size_t max = first + get_max(heap->data + first, child_amount);
+    printf("first %d last %d max %d\n", heap->data[first], heap->data[last], heap->data[max]);
 
     if (heap->data[max] > heap->data[shift_index]) {                           
         swap(heap->data + max, heap->data + shift_index);
