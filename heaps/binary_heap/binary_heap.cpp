@@ -36,8 +36,15 @@ static void build_heap(BinaryHeap *heap) {
 }
 
 static void shift_down(BinaryHeap *heap, size_t shift_index) {
-    if (heap->size * 2 > heap->size)
+    if (shift_index * 2 + 1 >= heap->size)
         return;
+
+    if (shift_index * 2 + 2 >= heap->size) {
+        if (heap->data[shift_index] < heap->data[shift_index * 2 + 1]) {
+            swap(heap->data + shift_index, heap->data + shift_index * 2 + 1);
+        }
+        return;
+    }
 
     size_t left  = 2*shift_index + 1;
     size_t right = 2*shift_index + 2;

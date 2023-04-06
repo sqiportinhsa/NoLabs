@@ -6,9 +6,9 @@
 
 #include "binary_heap.h"
 
-const size_t min_size = 1000000;
-const size_t max_size = 100000000;
-const size_t step     = 1000000;
+const size_t min_size = 100000;
+const size_t max_size = 10000000;
+const size_t step     = 100000;
 
 const size_t measures_num = 5;
 
