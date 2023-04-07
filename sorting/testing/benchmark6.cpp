@@ -6,7 +6,7 @@
 #include "../qsort/qsort.h"
 #include "../common.h"
 
-const size_t min_size = 250000;
+const size_t min_size = 2500000;
 const size_t max_size = 10000000;
 const size_t step     = 250000;
 
@@ -31,16 +31,17 @@ struct Times {
 };
 
 
-void test(size_t size, Arrs* (*create)(size_t size), const char *type);
+void   test(size_t size,     Arrs* (*create)(size_t size), const char *type);
 Times *test(size_t arr_size, Arrs* (*create)(size_t size));
+
 long get_sort_time(int *arr, size_t arr_size, void (*sorting)(int *array, size_t size));
 void print_results(Times **times, size_t arr_size, const char *type);
 
-Arrs *create_arr(size_t size);
-Arrs *create_indentical(size_t size);
-Arrs *create_sorted(size_t size);
-Arrs *create_reversed(size_t size);
-Arrs *create_anti_mid(size_t size);
+Arrs *create_arr        (size_t size);
+Arrs *create_indentical (size_t size);
+Arrs *create_sorted     (size_t size);
+Arrs *create_reversed   (size_t size);
+Arrs *create_anti_mid   (size_t size);
 
 
 int main() {
@@ -51,14 +52,14 @@ int main() {
         test(size, create_indentical, identical);
         test(size, create_sorted, sorted);
         test(size, create_reversed, reversed);
-        test(size, create_anti_mid, antimid);
+        //test(size, create_anti_mid, antimid);
     }
 }
 
 void test(size_t size, Arrs* (*create)(size_t size), const char *type) {
     Times *measures[measures_num] = {};
     for (int i = 0; i < measures_num; i++) {
-        measures[i] = test(size, create_arr);
+        measures[i] = test(size, create);
     }
     print_results(measures, size, type);
     for (int i = 0; i < measures_num; i++) {
@@ -86,6 +87,7 @@ long get_sort_time(int *arr, size_t arr_size, void (*sorting)(int *array, size_t
     clock_t begin = clock();                      
     sorting(arr, arr_size);           
     clock_t end = clock(); 
+
     long time = end - begin;
     time = (time * 1000) / CLOCKS_PER_SEC; // time in msec           
     return time;
