@@ -6,13 +6,13 @@
 
 #include "kheap.h"
 
-const size_t min_size = 10;
-const size_t max_size = 11;
-const size_t step     = 10;
+const size_t min_size = 100000;
+const size_t max_size = 10000000;
+const size_t step     = 100000;
 
 const size_t measures_num = 1;
 
-const size_t k_values[] = {5,2,3, 50, 100, 200, 300, 400, 500, 1000};
+const size_t k_values[] = {5, 50, 100, 200, 300, 400, 500, 1000};
 
 long test(int *arr, size_t arr_size, size_t k_value);
 long get_sort_time(void (*sorting)(int *arr, size_t arr_size, size_t k_value), 
@@ -45,7 +45,7 @@ long test(int *arr, size_t arr_size, size_t k_value) {
     memcpy(copy, arr, arr_size * sizeof(int));
 
     long time = get_sort_time(heap_sort, arr, arr_size, k_value);
-
+    
     free(copy);
     return time;
 }
